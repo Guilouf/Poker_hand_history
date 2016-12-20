@@ -19,10 +19,9 @@ UTG - under the gun
 
 """
 
-import sys
+
 import re
-# import firepoker
-# from firepoker import *
+import firepoker.Hand
 
 class Hand_history:
     """
