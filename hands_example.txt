@@ -1,0 +1,517 @@
+PokerStars Hand #139543339921: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level I (10/20) - 2015/08/18 7:59:19 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (500 in chips) 
+Seat 2: jonesbn (500 in chips) 
+Seat 3: Mepslol (500 in chips) 
+jonesbn: posts small blind 10
+Mepslol: posts big blind 20
+*** HOLE CARDS ***
+DawiC: raises 20 to 40
+jonesbn: raises 460 to 500 and is all-in
+Mepslol: folds 
+DawiC: folds 
+Uncalled bet (460) returned to jonesbn
+jonesbn collected 100 from pot
+jonesbn: doesn't show hand 
+*** SUMMARY ***
+Total pot 100 | Rake 0 
+Seat 1: DawiC (button) folded before Flop
+Seat 2: jonesbn (small blind) collected (100)
+Seat 3: Mepslol (big blind) folded before Flop
+
+PokerStars Hand #139543346417: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level I (10/20) - 2015/08/18 7:59:32 ET
+Table '1300867064 1' 3-max Seat #2 is the button
+Seat 1: DawiC (460 in chips) 
+Seat 2: jonesbn (560 in chips) 
+Seat 3: Mepslol (480 in chips) 
+Mepslol: posts small blind 10
+DawiC: posts big blind 20
+*** HOLE CARDS ***
+jonesbn: raises 23 to 43
+Mepslol: folds 
+DawiC: raises 417 to 460 and is all-in
+jonesbn: calls 417
+*** FLOP *** [6c 7s 4s]
+*** TURN *** [6c 7s 4s] [Qs]
+*** RIVER *** [6c 7s 4s Qs] [6h]
+*** SHOW DOWN ***
+DawiC: shows [Qd Qc] (a full house, Queens full of Sixes)
+jonesbn: shows [5d 5s] (two pair, Sixes and Fives)
+DawiC collected 930 from pot
+*** SUMMARY ***
+Total pot 930 | Rake 0 
+Board [6c 7s 4s Qs 6h]
+Seat 1: DawiC (big blind) showed [Qd Qc] and won (930) with a full house, Queens full of Sixes
+Seat 2: jonesbn (button) showed [5d 5s] and lost with two pair, Sixes and Fives
+Seat 3: Mepslol (small blind) folded before Flop
+
+PokerStars Hand #139543360503: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level I (10/20) - 2015/08/18 8:00:01 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (930 in chips) 
+Seat 2: jonesbn (100 in chips) 
+Seat 3: Mepslol (470 in chips) 
+DawiC: posts small blind 10
+jonesbn: posts big blind 20
+*** HOLE CARDS ***
+Mepslol: raises 20 to 40
+DawiC: folds 
+jonesbn: folds 
+Uncalled bet (20) returned to Mepslol
+Mepslol collected 50 from pot
+Mepslol: doesn't show hand 
+*** SUMMARY ***
+Total pot 50 | Rake 0 
+Seat 1: DawiC (small blind) folded before Flop
+Seat 2: jonesbn (big blind) folded before Flop
+Seat 3: Mepslol (button) collected (50)
+
+PokerStars Hand #139543370955: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level I (10/20) - 2015/08/18 8:00:20 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (920 in chips) 
+Seat 2: jonesbn (80 in chips) 
+Seat 3: Mepslol (500 in chips) 
+jonesbn: posts small blind 10
+Mepslol: posts big blind 20
+*** HOLE CARDS ***
+DawiC: folds 
+jonesbn: raises 60 to 80 and is all-in
+Mepslol: folds 
+Uncalled bet (60) returned to jonesbn
+jonesbn collected 40 from pot
+jonesbn: doesn't show hand 
+*** SUMMARY ***
+Total pot 40 | Rake 0 
+Seat 1: DawiC (button) folded before Flop (didn't bet)
+Seat 2: jonesbn (small blind) collected (40)
+Seat 3: Mepslol (big blind) folded before Flop
+
+PokerStars Hand #139543379949: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level I (10/20) - 2015/08/18 8:00:38 ET
+Table '1300867064 1' 3-max Seat #2 is the button
+Seat 1: DawiC (920 in chips) 
+Seat 2: jonesbn (100 in chips) 
+Seat 3: Mepslol (480 in chips) 
+Mepslol: posts small blind 10
+DawiC: posts big blind 20
+*** HOLE CARDS ***
+jonesbn: raises 80 to 100 and is all-in
+Mepslol: folds 
+DawiC: folds 
+Uncalled bet (80) returned to jonesbn
+jonesbn collected 50 from pot
+jonesbn: doesn't show hand 
+*** SUMMARY ***
+Total pot 50 | Rake 0 
+Seat 1: DawiC (big blind) folded before Flop
+Seat 2: jonesbn (button) collected (50)
+Seat 3: Mepslol (small blind) folded before Flop
+
+PokerStars Hand #139543386623: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level I (10/20) - 2015/08/18 8:00:51 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (900 in chips) 
+Seat 2: jonesbn (130 in chips) 
+Seat 3: Mepslol (470 in chips) 
+DawiC: posts small blind 10
+jonesbn: posts big blind 20
+*** HOLE CARDS ***
+Mepslol: folds 
+DawiC: raises 880 to 900 and is all-in
+jonesbn: calls 110 and is all-in
+Uncalled bet (770) returned to DawiC
+*** FLOP *** [8c 2s 4h]
+*** TURN *** [8c 2s 4h] [Qs]
+*** RIVER *** [8c 2s 4h Qs] [Th]
+*** SHOW DOWN ***
+DawiC: shows [6h 6c] (a pair of Sixes)
+jonesbn: shows [Qc Kc] (a pair of Queens)
+jonesbn collected 260 from pot
+*** SUMMARY ***
+Total pot 260 | Rake 0 
+Board [8c 2s 4h Qs Th]
+Seat 1: DawiC (small blind) showed [6h 6c] and lost with a pair of Sixes
+Seat 2: jonesbn (big blind) showed [Qc Kc] and won (260) with a pair of Queens
+Seat 3: Mepslol (button) folded before Flop (didn't bet)
+
+PokerStars Hand #139543398190: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level I (10/20) - 2015/08/18 8:01:12 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (770 in chips) 
+Seat 2: jonesbn (260 in chips) 
+Seat 3: Mepslol (470 in chips) 
+jonesbn: posts small blind 10
+Mepslol: posts big blind 20
+*** HOLE CARDS ***
+DawiC: folds 
+jonesbn: calls 10
+Mepslol: checks 
+*** FLOP *** [2d 8c Kd]
+jonesbn: checks 
+Mepslol: checks 
+*** TURN *** [2d 8c Kd] [7d]
+jonesbn: checks 
+Mepslol: checks 
+*** RIVER *** [2d 8c Kd 7d] [6c]
+jonesbn: bets 26
+Mepslol: calls 26
+*** SHOW DOWN ***
+jonesbn: shows [Qs 5d] (high card King)
+Mepslol: shows [8d 6h] (two pair, Eights and Sixes)
+Mepslol collected 92 from pot
+*** SUMMARY ***
+Total pot 92 | Rake 0 
+Board [2d 8c Kd 7d 6c]
+Seat 1: DawiC (button) folded before Flop (didn't bet)
+Seat 2: jonesbn (small blind) showed [Qs 5d] and lost with high card King
+Seat 3: Mepslol (big blind) showed [8d 6h] and won (92) with two pair, Eights and Sixes
+
+PokerStars Hand #139543421967: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level I (10/20) - 2015/08/18 8:01:56 ET
+Table '1300867064 1' 3-max Seat #2 is the button
+Seat 1: DawiC (770 in chips) 
+Seat 2: jonesbn (214 in chips) 
+Seat 3: Mepslol (516 in chips) 
+Mepslol: posts small blind 10
+DawiC: posts big blind 20
+*** HOLE CARDS ***
+jonesbn: folds 
+Mepslol: raises 20 to 40
+DawiC: calls 20
+*** FLOP *** [8h Qd 6s]
+Mepslol: checks 
+DawiC: bets 40
+Mepslol: folds 
+Uncalled bet (40) returned to DawiC
+DawiC collected 80 from pot
+DawiC: doesn't show hand 
+*** SUMMARY ***
+Total pot 80 | Rake 0 
+Board [8h Qd 6s]
+Seat 1: DawiC (big blind) collected (80)
+Seat 2: jonesbn (button) folded before Flop (didn't bet)
+Seat 3: Mepslol (small blind) folded on the Flop
+
+PokerStars Hand #139543440103: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level II (15/30) - 2015/08/18 8:02:27 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (810 in chips) 
+Seat 2: jonesbn (214 in chips) 
+Seat 3: Mepslol (476 in chips) 
+DawiC: posts small blind 15
+jonesbn: posts big blind 30
+*** HOLE CARDS ***
+Mepslol: folds 
+DawiC: raises 780 to 810 and is all-in
+jonesbn: calls 184 and is all-in
+Uncalled bet (596) returned to DawiC
+*** FLOP *** [9d 8c 6c]
+*** TURN *** [9d 8c 6c] [Js]
+*** RIVER *** [9d 8c 6c Js] [2c]
+*** SHOW DOWN ***
+DawiC: shows [Jd 9h] (two pair, Jacks and Nines)
+jonesbn: shows [Ad 2d] (a pair of Deuces)
+DawiC collected 428 from pot
+jonesbn finished the tournament in 3rd place
+*** SUMMARY ***
+Total pot 428 | Rake 0 
+Board [9d 8c 6c Js 2c]
+Seat 1: DawiC (small blind) showed [Jd 9h] and won (428) with two pair, Jacks and Nines
+Seat 2: jonesbn (big blind) showed [Ad 2d] and lost with a pair of Deuces
+Seat 3: Mepslol (button) folded before Flop (didn't bet)
+
+PokerStars Hand #139543452955: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level II (15/30) - 2015/08/18 8:02:50 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (1024 in chips) 
+Seat 3: Mepslol (476 in chips) 
+DawiC: posts small blind 15
+Mepslol: posts big blind 30
+*** HOLE CARDS ***
+DawiC: raises 30 to 60
+Mepslol: calls 30
+*** FLOP *** [Ts 7d 5h]
+Mepslol: checks 
+DawiC: bets 61
+Mepslol: calls 61
+*** TURN *** [Ts 7d 5h] [9s]
+Mepslol: checks 
+DawiC: bets 150
+Mepslol: folds 
+Uncalled bet (150) returned to DawiC
+DawiC collected 242 from pot
+DawiC: doesn't show hand 
+*** SUMMARY ***
+Total pot 242 | Rake 0 
+Board [Ts 7d 5h 9s]
+Seat 1: DawiC (button) (small blind) collected (242)
+Seat 3: Mepslol (big blind) folded on the Turn
+
+PokerStars Hand #139543491436: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level II (15/30) - 2015/08/18 8:03:58 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (1145 in chips) 
+Seat 3: Mepslol (355 in chips) 
+Mepslol: posts small blind 15
+DawiC: posts big blind 30
+*** HOLE CARDS ***
+Mepslol: raises 325 to 355 and is all-in
+DawiC: folds 
+Uncalled bet (325) returned to Mepslol
+Mepslol collected 60 from pot
+Mepslol: doesn't show hand 
+*** SUMMARY ***
+Total pot 60 | Rake 0 
+Seat 1: DawiC (big blind) folded before Flop
+Seat 3: Mepslol (button) (small blind) collected (60)
+
+PokerStars Hand #139543494922: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level II (15/30) - 2015/08/18 8:04:04 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (1115 in chips) 
+Seat 3: Mepslol (385 in chips) 
+DawiC: posts small blind 15
+Mepslol: posts big blind 30
+*** HOLE CARDS ***
+DawiC: calls 15
+Mepslol: checks 
+*** FLOP *** [3h 6d 8c]
+Mepslol: checks 
+DawiC: bets 30
+Mepslol: folds 
+Uncalled bet (30) returned to DawiC
+DawiC collected 60 from pot
+DawiC: doesn't show hand 
+*** SUMMARY ***
+Total pot 60 | Rake 0 
+Board [3h 6d 8c]
+Seat 1: DawiC (button) (small blind) collected (60)
+Seat 3: Mepslol (big blind) folded on the Flop
+
+PokerStars Hand #139543502101: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level II (15/30) - 2015/08/18 8:04:16 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (1145 in chips) 
+Seat 3: Mepslol (355 in chips) 
+Mepslol: posts small blind 15
+DawiC: posts big blind 30
+*** HOLE CARDS ***
+Mepslol: raises 325 to 355 and is all-in
+DawiC: folds 
+Uncalled bet (325) returned to Mepslol
+Mepslol collected 60 from pot
+Mepslol: doesn't show hand 
+*** SUMMARY ***
+Total pot 60 | Rake 0 
+Seat 1: DawiC (big blind) folded before Flop
+Seat 3: Mepslol (button) (small blind) collected (60)
+
+PokerStars Hand #139543511252: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level II (15/30) - 2015/08/18 8:04:32 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (1115 in chips) 
+Seat 3: Mepslol (385 in chips) 
+DawiC: posts small blind 15
+Mepslol: posts big blind 30
+*** HOLE CARDS ***
+DawiC: raises 30 to 60
+Mepslol: calls 30
+*** FLOP *** [Qd Jd 9c]
+Mepslol: checks 
+DawiC: checks 
+*** TURN *** [Qd Jd 9c] [3h]
+Mepslol: checks 
+DawiC: checks 
+*** RIVER *** [Qd Jd 9c 3h] [7d]
+Mepslol: checks 
+DawiC: checks 
+*** SHOW DOWN ***
+Mepslol: shows [7h 5h] (a pair of Sevens)
+DawiC: shows [9h Ts] (a pair of Nines)
+DawiC collected 120 from pot
+*** SUMMARY ***
+Total pot 120 | Rake 0 
+Board [Qd Jd 9c 3h 7d]
+Seat 1: DawiC (button) (small blind) showed [9h Ts] and won (120) with a pair of Nines
+Seat 3: Mepslol (big blind) showed [7h 5h] and lost with a pair of Sevens
+
+PokerStars Hand #139543526503: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level II (15/30) - 2015/08/18 8:04:59 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (1175 in chips) 
+Seat 3: Mepslol (325 in chips) 
+Mepslol: posts small blind 15
+DawiC: posts big blind 30
+*** HOLE CARDS ***
+Mepslol: calls 15
+DawiC: raises 60 to 90
+Mepslol has timed out
+Mepslol: folds 
+Uncalled bet (60) returned to DawiC
+Mepslol is sitting out
+Mepslol has returned
+DawiC collected 60 from pot
+*** SUMMARY ***
+Total pot 60 | Rake 0 
+Seat 1: DawiC (big blind) collected (60)
+Seat 3: Mepslol (button) (small blind) folded before Flop
+
+PokerStars Hand #139543546388: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:05:33 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (1205 in chips) 
+Seat 3: Mepslol (295 in chips) 
+DawiC: posts small blind 20
+Mepslol: posts big blind 40
+*** HOLE CARDS ***
+DawiC: folds 
+Uncalled bet (20) returned to Mepslol
+Mepslol collected 40 from pot
+Mepslol: doesn't show hand 
+*** SUMMARY ***
+Total pot 40 | Rake 0 
+Seat 1: DawiC (button) (small blind) folded before Flop
+Seat 3: Mepslol (big blind) collected (40)
+
+PokerStars Hand #139543550798: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:05:41 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (1185 in chips) 
+Seat 3: Mepslol (315 in chips) 
+Mepslol: posts small blind 20
+DawiC: posts big blind 40
+*** HOLE CARDS ***
+Mepslol: raises 275 to 315 and is all-in
+DawiC: folds 
+Uncalled bet (275) returned to Mepslol
+Mepslol collected 80 from pot
+Mepslol: doesn't show hand 
+Mepslol said, "well you had a nice run"
+*** SUMMARY ***
+Total pot 80 | Rake 0 
+Seat 1: DawiC (big blind) folded before Flop
+Seat 3: Mepslol (button) (small blind) collected (80)
+
+PokerStars Hand #139543559255: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:05:55 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (1145 in chips) 
+Seat 3: Mepslol (355 in chips) 
+DawiC: posts small blind 20
+Mepslol: posts big blind 40
+*** HOLE CARDS ***
+Mepslol said, "2 90ks lol"
+DawiC: raises 1105 to 1145 and is all-in
+Mepslol said, "or did you hit even more"
+Mepslol: folds 
+Uncalled bet (1105) returned to DawiC
+DawiC collected 80 from pot
+DawiC: doesn't show hand 
+*** SUMMARY ***
+Total pot 80 | Rake 0 
+Seat 1: DawiC (button) (small blind) collected (80)
+Seat 3: Mepslol (big blind) folded before Flop
+
+PokerStars Hand #139543563799: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:06:04 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (1185 in chips) 
+Seat 3: Mepslol (315 in chips) 
+Mepslol: posts small blind 20
+DawiC: posts big blind 40
+*** HOLE CARDS ***
+Mepslol: raises 275 to 315 and is all-in
+DawiC: folds 
+Uncalled bet (275) returned to Mepslol
+Mepslol collected 80 from pot
+Mepslol: doesn't show hand 
+*** SUMMARY ***
+Total pot 80 | Rake 0 
+Seat 1: DawiC (big blind) folded before Flop
+Seat 3: Mepslol (button) (small blind) collected (80)
+
+PokerStars Hand #139543568427: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:06:12 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (1145 in chips) 
+Seat 3: Mepslol (355 in chips) 
+DawiC: posts small blind 20
+Mepslol: posts big blind 40
+*** HOLE CARDS ***
+DawiC: folds 
+Uncalled bet (20) returned to Mepslol
+Mepslol collected 40 from pot
+Mepslol: doesn't show hand 
+*** SUMMARY ***
+Total pot 40 | Rake 0 
+Seat 1: DawiC (button) (small blind) folded before Flop
+Seat 3: Mepslol (big blind) collected (40)
+
+PokerStars Hand #139543570743: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:06:15 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (1125 in chips) 
+Seat 3: Mepslol (375 in chips) 
+Mepslol: posts small blind 20
+DawiC: posts big blind 40
+*** HOLE CARDS ***
+Mepslol: calls 20
+DawiC: checks 
+*** FLOP *** [5h 5d 6c]
+DawiC: checks 
+Mepslol: bets 40
+DawiC: folds 
+Uncalled bet (40) returned to Mepslol
+Mepslol collected 80 from pot
+Mepslol: doesn't show hand 
+*** SUMMARY ***
+Total pot 80 | Rake 0 
+Board [5h 5d 6c]
+Seat 1: DawiC (big blind) folded on the Flop
+Seat 3: Mepslol (button) (small blind) collected (80)
+
+PokerStars Hand #139543582482: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:06:35 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (1085 in chips) 
+Seat 3: Mepslol (415 in chips) 
+DawiC: posts small blind 20
+Mepslol: posts big blind 40
+*** HOLE CARDS ***
+DawiC: calls 20
+Mepslol: checks 
+*** FLOP *** [Ks Jd 9d]
+Mepslol: checks 
+DawiC: bets 40
+Mepslol: folds 
+Uncalled bet (40) returned to DawiC
+DawiC collected 80 from pot
+DawiC: doesn't show hand 
+*** SUMMARY ***
+Total pot 80 | Rake 0 
+Board [Ks Jd 9d]
+Seat 1: DawiC (button) (small blind) collected (80)
+Seat 3: Mepslol (big blind) folded on the Flop
+
+PokerStars Hand #139543592019: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:06:52 ET
+Table '1300867064 1' 3-max Seat #3 is the button
+Seat 1: DawiC (1125 in chips) 
+Seat 3: Mepslol (375 in chips) 
+Mepslol: posts small blind 20
+DawiC: posts big blind 40
+*** HOLE CARDS ***
+Mepslol: folds 
+Uncalled bet (20) returned to DawiC
+DawiC collected 40 from pot
+DawiC: doesn't show hand 
+*** SUMMARY ***
+Total pot 40 | Rake 0 
+Seat 1: DawiC (big blind) collected (40)
+Seat 3: Mepslol (button) (small blind) folded before Flop
+
+PokerStars Hand #139543594825: Tournament #1300867064, $28.50+$1.50 USD Hold'em No Limit - Level III (20/40) - 2015/08/18 8:06:56 ET
+Table '1300867064 1' 3-max Seat #1 is the button
+Seat 1: DawiC (1145 in chips) 
+Seat 3: Mepslol (355 in chips) 
+DawiC: posts small blind 20
+Mepslol: posts big blind 40
+*** HOLE CARDS ***
+DawiC: raises 1105 to 1145 and is all-in
+Mepslol: calls 315 and is all-in
+Uncalled bet (790) returned to DawiC
+*** FLOP *** [9c 8h Jc]
+*** TURN *** [9c 8h Jc] [3s]
+*** RIVER *** [9c 8h Jc 3s] [As]
+*** SHOW DOWN ***
+Mepslol: shows [Qd Jd] (a pair of Jacks)
+DawiC: shows [Ac 6h] (a pair of Aces)
+DawiC collected 710 from pot
+Mepslol finished the tournament in 2nd place
+DawiC wins the tournament and receives $120.00 - congratulations!
+*** SUMMARY ***
+Total pot 710 | Rake 0 
+Board [9c 8h Jc 3s As]
+Seat 1: DawiC (button) (small blind) showed [Ac 6h] and won (710) with a pair of Aces
+Seat 3: Mepslol (big blind) showed [Qd Jd] and lost with a pair of Jacks
+

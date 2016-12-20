@@ -19,6 +19,7 @@ UTG - under the gun
 
 """
 
+import sys
 import re
 # import firepoker
 # from firepoker import *
@@ -27,7 +28,6 @@ class Hand_history:
     """
     Class called for each hand
     """
-
     def __init__(self, hand_file):
         # format attributes
         self.ante = 0
@@ -47,16 +47,10 @@ class Hand_history:
         self.player_list = []
         self.player_inv_dict = {}  # for given name, gives the position
 
-        print("\n Parsing current hand")
-
         self.part_parse()
-
         self.parse_hand()
         self.parse_sequence()
         self.parse_summary()
-
-
-
 
     def part_parse(self):
         """
@@ -74,11 +68,8 @@ class Hand_history:
                 # print(type(parts[i]))
                 self.part_dict[parts[i]] = parts[i+1].split('\n')
 
-
-
     def parse_hand(self):
         gen_line = (yield_line for yield_line in self.hand_file.split('\n'))  # splits current hand into lines
-
 
         #####################
         # BTN and max seats #
@@ -94,12 +85,8 @@ class Hand_history:
                 self.btn_seat = int(re.search('#(.)', line).group(1))
                 self.max_seat = int(re.search('(.)-max', line).group(1))  # regex for finding the maximum number of seat (?-max)
 
-                # print(self.btn_seat)
-                # print(self.max_seat)
-                break  # stops generator
+                break
 
-        # print('\n Joueurs')
-        
         #####################################
         # Player names, stacks and position #
         #####################################
@@ -127,11 +114,6 @@ class Hand_history:
         for tuple_dict in stacks_temp.items():  # fixme python 2.7?
             self.stacks[self.player_inv_dict[tuple_dict[0]]] = tuple_dict[1]
 
-
-        # print("\nPlayer dict: ", self.players)
-        # print("stacks dict: ", self.stacks)
-        # print("Player list", self.player_list)
-
         ##################
         # Check for ante #
         ##################
@@ -141,10 +123,6 @@ class Hand_history:
                 self.ante = re.search('the ante ([0-9]+)', line).group(1)
             except:
                 pass
-        # print("ANTE: ", self.ante)
-
-
-
 
     def parse_sequence(self):
         """
@@ -217,8 +195,6 @@ class Hand_history:
         # print("Sequence: ", self.sequence)
         # print("Holecards: ", self.holecards)
 
-
-
     def parse_summary(self):
         """
         Get bordcards and winner name
@@ -238,11 +214,6 @@ class Hand_history:
             if "and won" in line or "collected" in line:  # fixme sometime things between player and showed, get other win cases
                 self.winner = re.search('Seat [0-9]: (\w+) ', line).group(1)  # assuming there is always "showed" when "won"
                 # print("Winner: ", self.winner)
-
-
-
-
-
 
     def position(self):
         """
@@ -296,7 +267,6 @@ class Hand_history:
             self.player_inv_dict[tuple_dict[1]] = tuple_dict[0]
         # print(self.players)
         # print(self.player_inv_dict)
-
 
 def PS2acpc(ps_text):
     instance = Hand_history(ps_text)
@@ -478,8 +448,6 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
             if action[1] == 'collected':
                 summary_dict[action[0]] = " collected ({}) ".format(action[2])
 
-
-
     ###################
     # "Writting" part #
     ###################
@@ -501,7 +469,6 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
             btn_num = i
 
     # TODO ants..
-
     # small/big lbind posts
     try:
         blind_str = "\n{}: posts small bling {}".format(players['SB'], blind[0])
@@ -531,7 +498,6 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     #############
     # Show down #
     #############
-    # if the game reach to river, then display the holecards?
 
     ###########
     # SUMMARY #
@@ -552,8 +518,6 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
         if player == winner:
             summary_str += " won"
 
-
-
     # craft return string
     ret_string += header
     ret_string += play_stack_str
@@ -568,23 +532,19 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
 
 
 if __name__ == '__main__':
-    hands = open('hands_sauv.txt').read().split('\n\n')
+    hands = open('hands_example.txt').read().split('\n\n')
 
     # help(firepoker)
 
     for hand in hands:
         # Hand_history(hand)
         ante, blind, stacks, sequence, holecards, boardcards, winner, players = PS2acpc(hand)
-        print("\nHand results:")
+        print("\n\n\nHand results:")
         print("Ante: ", ante, "Stacks: ", stacks, "Sequence: ", sequence)
         print("Holecards: ", holecards, "Boardcards: ", boardcards)
         print("Winner: ", winner, "Players: ", players)
 
         hand_conv = acpc2PS(stacks, sequence, holecards,  boardcards, winner, players, ante, blind)
         print(hand_conv)
-        # print("\n Conv Hand \n", hand_conv)
 
-        # break  # testing just the first one for now
-
-        #  hand_conv = acpc2PS(ante, stacks, sequence, holecards,  boardcards, winner, players)
-
+        break
