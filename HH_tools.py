@@ -21,16 +21,29 @@ UTG - under the gun
 
 
 import re
-import firepoker.Hand
+import firepoker.Hand as Hand
+# _pos_name_lst is declared after. Located inside the class
+
 
 class Hand_history:
     """
     Class called for each hand
     """
+    pos_name_lst = [
+            ["BTN", "BB"],
+            ["BTN", "SB", "BB"],
+            ["BTN", "SB", "BB", "CO"],
+            ["BTN", "SB", "BB", "UTG", "CO"],
+            ["BTN", "SB", "BB", "UTG", "MP1", "CO"],
+            ["BTN", "SB", "BB", "UTG", "MP1", "MP2", "CO"],
+            ["BTN", "SB", "BB", "UTG", "MP1", "MP2", "MP3", "CO"],
+            ["BTN", "SB", "BB", "UTG", "UTG+1", "MP1", "MP2", "MP3", "CO"],
+            ["BTN", "SB", "BB", "UTG", "UTG+1", "UTG+2", "MP1", "MP2", "MP3", "CO"],
+        ]
     def __init__(self, hand_file):
         # format attributes
         self.ante = 0
-        self.blind = 0
+        self.bblind = 0  # an int..
         self.stacks = {}  # key: position_name value: stack_of_player chips
         self.sequence = ""
         self.holecards = {}  # in the examples, hero is the player. Holecards are dealt just after "holecard"
@@ -46,6 +59,8 @@ class Hand_history:
         self.player_list = []
         self.player_inv_dict = {}  # for given name, gives the position
 
+
+        # function calls
         self.part_parse()
         self.parse_hand()
         self.parse_sequence()
@@ -78,7 +93,7 @@ class Hand_history:
             if line[0:5] == "Poker":
                 # print("header",  line)
                 reg_blind = re.search("\(\$?([0-9-.]+)/\$?([0-9-.]+)( USD)?\)", line)
-                self.blind = [reg_blind.group(1), reg_blind.group(2)]
+                self.bblind = int(reg_blind.group(2))  # just the big blind, sb == bb/2
             if line[0:5] == "Table":  # retrieve max number of sets and btn position
 
                 self.btn_seat = int(re.search('#(.)', line).group(1))
@@ -107,7 +122,7 @@ class Hand_history:
             # temporary stacks dict
             stacks_temp[player_name] = player_stacks
 
-        self.position()
+        self.position()  # call position method to order the player with their positions
 
         # add value of stacks by position in self.stacks
         for tuple_dict in stacks_temp.items():  # fixme python 2.7?
@@ -142,7 +157,7 @@ class Hand_history:
             else:
                 return "", 0
 
-        # add player hole cards
+        # add player hole cards todo change try/except to ifs
         try:
             reg_holecard = re.search("Dealt to (.+) \[(.+)\]", self.part_dict["HOLE CARDS"][1])  # group1 name, 2 card value
             self.holecards[self.player_inv_dict[reg_holecard.group(1)]] = reg_holecard.group(2).replace(' ', '')
@@ -226,17 +241,6 @@ class Hand_history:
 
         :return:
         """
-        pos_name_lst = [
-            ["BTN", "BB"],
-            ["BTN", "SB", "BB"],
-            ["BTN", "SB", "BB", "CO"],
-            ["BTN", "SB", "BB", "UTG", "CO"],
-            ["BTN", "SB", "BB", "UTG", "MP1", "CO"],
-            ["BTN", "SB", "BB", "UTG", "MP1", "MP2", "CO"],
-            ["BTN", "SB", "BB", "UTG", "MP1", "MP2", "MP3", "CO"],
-            ["BTN", "SB", "BB", "UTG", "UTG+1", "MP1", "MP2", "MP3", "CO"],
-            ["BTN", "SB", "BB", "UTG", "UTG+1", "UTG+2", "MP1", "MP2", "MP3", "CO"],
-        ]
 
         def shift(list_p, btn_player):
             """
@@ -253,8 +257,7 @@ class Hand_history:
                 x += 1
                 list_p = list_p[-x:] + list_p[:-x]
 
-
-        for sublist in pos_name_lst:
+        for sublist in self.pos_name_lst:
             if len(sublist) == len(self.player_list):
                 player_lst_cy = shift(self.player_list, self.players['BTN'])
                 for player, pos in zip(player_lst_cy, sublist):
@@ -270,17 +273,19 @@ class Hand_history:
 def PS2acpc(ps_text):
     instance = Hand_history(ps_text)
     ante = instance.ante
-    blind = instance.blind
+    bblind = instance.bblind
     stacks = instance.stacks
     sequence = instance.sequence
     holecards = instance.holecards
     boardcards = instance.boardcards
     winner = instance.winner
     players = instance.players
-    return ante, blind, stacks, sequence, holecards,  boardcards, winner, players
+    return ante, bblind, stacks, sequence, holecards,  boardcards, winner, players
 
 
-def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante=10, blind=[10, 20]):
+_pos_name_lst = Hand_history.pos_name_lst
+
+def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante=10, bigblind=20, rake=0):
     """
     Write default args, payers=None
 
@@ -292,30 +297,13 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     #####################
     # "Processing" part #
     #####################
-    pos_name_lst = [
-        ["BTN", "BB"],
-        ["BTN", "SB", "BB"],
-        ["CO", "BTN", "SB", "BB"],
-        ["UTG", "CO", "BTN", "SB", "BB"],
-        ["UTG", "MP", "CO", "BTN", "SB", "BB"],
-        ["UTG", "MP1", "MP2", "CO", "BTN", "SB", "BB"],
-        ["UTG", "MP1", "MP2", "MP3", "CO", "BTN", "SB", "BB"],
-        ["UTG", "UTG+1", "MP1", "MP2", "MP3", "CO", "BTN", "SB", "BB"],
-        ["UTG", "UTG+1", "UTG+2", "MP1", "MP2", "MP3", "CO", "BTN", "SB", "BB"],
-    ]
 
-    # append players in an ordered list, and a reverse dict for players
-    order_players = []
-    inv_dict_player = {}
-    sublist_ = []
-    for sublist in pos_name_lst:
-        if len(sublist) == len(players):
-            sublist_ = sublist
-            for pos in sublist:
-                order_players.append(players[pos])
-                inv_dict_player[players[pos]] = pos
-    # print(order_players)
-    # print(inv_dict_player)
+    n_players = len(stacks)  # gives the number of players
+    sublist_ = _pos_name_lst[n_players-2]  # the list of position correspunding to the number of players (2play: index0)
+    order_players = map(lambda pos: players[pos], sublist_)  # list of players, ordered by their position
+    inv_dict_player = dict(zip(players.values(), players.keys()))  # nice, i thinked the order was not guaranted ;)
+
+
 
     split_sequence = sequence.split("/")
     def sequence_parser(splt_seq):
@@ -337,18 +325,38 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
         except:
             return ""
 
-    def default_player():
+    def default_player():  # todo remove it, Hero not default
         return "Hero"
     game_player = default_player()
 
-    def is_allin():
-        return ""
+    def is_allin(stacks, sequence, position, bb):
+        for pos in stacks:
+            stacks[pos] = int(stacks[pos]*100)
+        hand = Hand.Hand(1, stacks=stacks, bb=int(bb*100))
+        for action in seq_to_actions(sequence):
+            if '/' == action:
+                continue
+            if 'r' in action:
+                action = 'r{}'.format(int(float(action[1:])*100))
+            hand.doAction(action)
+        return stacks[position] == hand.get_investment(position)
 
-    def pot():
-        return "POT!!!!!"
+    # why? sequence_parser wasnt good?
+    def seq_to_actions(sequence):
+        return sequence.replace('c',' c').replace('f', ' f').replace('r', ' r').replace('/',' /').strip().split()
 
-    def rake():
-        return "RAKE!!!!"
+    def pot(stacks, sequence, bb):
+        for pos in stacks:
+            stacks[pos] = int(stacks[pos]*100)
+        hand = Hand.Hand(1, stacks=stacks, bb=int(bb*100))
+        for action in seq_to_actions(sequence):
+            if '/' == action:
+                continue
+            if 'r' in action:
+                action = 'r{}'.format(int(float(action[1:])*100))
+            hand.doAction(action)
+        return hand.get_pot()
+
 
     def player_actions(ord_play, seq_part, holecards, boardcard, player):
         """
@@ -365,40 +373,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
                             ["..."]],
                            ["..."]]
         return players_actions
-        # """
-        # For a given part (pre flop..), and the correspunding parsed sequence, and player order,
-        # Returns:
-        # 
-        # """
-        # try:
-        # 
-        #     def calls():
-        #         return "CALLS!!!!!!"
-        # 
-        #     def min_raise(sequence):
-        #         return "MINRAISE_NUMBER"
-        # 
-        # 
-        #     return_str = ""
-        #     flag_bet = False if flag_preflop else True  # flagpreflop tell that raise is first
-        #     # TODO raise/bet
-        #     for player, action in zip(ord_play, seq_part):
-        #         if action == 'f':
-        #             return_str += "\n{}: folds".format(player)
-        #         if action == 'c':
-        #             return_str += "\n{}: calls {}".format(player, calls())
-        #         if action[0] == 'r' and not flag_bet:
-        #             return_str += "\n{}: raises {} to {}".format(player, min_raise("seq"), action[1:])
-        #             flag_bet_temp = True  # then it is bet for the preflop round?
-        #             # bet always first, exept first round
-        #         if action[0] == 'r' and flag_bet:
-        #             return_str += "\n{}: bets {}".format(player, action[1:])
-        #             flag_bet_temp = False  # the its raise
-        #         flag_bet = flag_bet_temp
-        # 
-        #     return return_str
-        # except:
-        #     return ""
+
 
 
     def write_actions(actions):
@@ -455,10 +430,10 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     play_stack_str = ""
     btn_num = 0
 
-    # build header
+
     header = "PokerStars Hand #XXX: Tournament #XXX, $2.00+$2.00+$0.40 USD Hold'em No" \
              "Limit - Level XVIII ({}/{})  - 2016/07/29 23:25:05 MSK [2016/07/29 16:25:05 ET]\n" \
-             "Table '1618015625 40' 9-max Seat #{} is the button".format(blind[0], blind[1], btn_num)
+             "Table '1618015625 40' 9-max Seat #{} is the button".format(bigblind/2.0, bigblind, btn_num)  # 0:.2f for floats?
 
     #build player_stack_str
     for i, player in enumerate(order_players):
@@ -470,18 +445,19 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     # TODO ants..
     # small/big lbind posts
     try:
-        blind_str = "\n{}: posts small bling {}".format(players['SB'], blind[0])
+        blind_str = "\n{}: posts small bling {}".format(players['SB'], bigblind/2.0)
     except:
-        blind_str = "\n{}: posts small bling {}".format(players['BTN'], blind[0])  # when 2 players, BTN is also SB
-    blind_str += "\n{}: posts small bling {}".format(players['BB'], blind[1])
+        blind_str = "\n{}: posts small bling {}".format(players['BTN'], bigblind/2.0)  # when 2 players, BTN is also SB
+    blind_str += "\n{}: posts small bling {}".format(players['BB'], bigblind)
 
     # holecards str
     holecards_str = "\n*** HOLE CARDS ***"
 
 
     # the "dealt" part
-    holecards_str += "\nDealt to {} [{}]".format(game_player, holecards[inv_dict_player[game_player]])
-
+    if 'Hero' in players.values():
+        # holecards_str += "\nDealt to {} [{}]".format(game_player, holecards[inv_dict_player[game_player]])
+        holecards_str += "\nDealt to Hero [{}]".format(holecards[inv_dict_player('Hero')])
 
 
 
@@ -503,7 +479,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     ###########
 
     summary_str = "\n*** SUMMARY ***\n" \
-                  "Total pot {} | Rake {}\n".format(pot(), rake())
+                  "Total pot {} | Rake {}\n".format(pot(stacks, sequence, bigblind), rake)
 
     # make the boardcard summary todo
     final_board = boardcards.replace("/", "")
@@ -531,12 +507,12 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
 
 
 if __name__ == '__main__':
-    hands = open('hands_example.txt').read().split('\n\n')
+    hands = open('hands_example.txt').read().split('\n\n')  # not always
 
     # help(firepoker)
 
     for hand in hands:
-        # Hand_history(hand)
+        # print hand
         ante, blind, stacks, sequence, holecards, boardcards, winner, players = PS2acpc(hand)
         print("\n\n\nHand results:")
         print("Ante: ", ante, "Stacks: ", stacks, "Sequence: ", sequence)
@@ -546,4 +522,4 @@ if __name__ == '__main__':
         hand_conv = acpc2PS(stacks, sequence, holecards,  boardcards, winner, players, ante, blind)
         print(hand_conv)
 
-        break
+        # break
