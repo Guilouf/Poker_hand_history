@@ -136,7 +136,7 @@ class HandHistory:
         for line in gen_line:
             try:
                 self.ante = re.search('the ante ([0-9]+)', line).group(1)
-            except:
+            except AttributeError:  # if the line does not exist
                 pass
 
     def parse_sequence(self):
@@ -162,7 +162,7 @@ class HandHistory:
         try:
             reg_holecard = re.search("Dealt to (.+) \[(.+)\]", self.part_dict["HOLE CARDS"][1])  # group1 name, 2 card value
             self.holecards[self.player_inv_dict[reg_holecard.group(1)]] = reg_holecard.group(2).replace(' ', '')
-        except:
+        except AttributeError:  # if line not found
             pass
 
         amount1 = 0
@@ -175,24 +175,20 @@ class HandHistory:
         amount2 = 0
         amount_temp = 0
         self.sequence += "/"
-        try:
+        if self.part_dict.get("FLOP", None) is not None:
             for line in self.part_dict["FLOP"]:
                 self.sequence += craft_seq(line, amount1)[0]
                 amount_temp += craft_seq(line, amount1)[1]
             amount2 += amount_temp
-        except:
-            pass
 
         amount3 = 0
         amount_temp = 0
         self.sequence += "/"
-        try:
+        if self.part_dict.get("TURN", None) is not None:
             for line in self.part_dict["TURN"]:
                 self.sequence += craft_seq(line, amount2)[0]
                 amount_temp += craft_seq(line, amount2)[1]
                 amount3 += amount_temp
-        except:
-            pass
 
         self.sequence += "/"
         if self.part_dict.get("RIVER", None) is not None:
@@ -205,10 +201,8 @@ class HandHistory:
                 try:
                     reg_show = re.search("(.+): shows \[(.+)\]", line)
                     self.holecards[self.player_inv_dict[reg_show.group(1)]] = reg_show.group(2).replace(' ', '')
-                except:
+                except AttributeError:  # if regex line not found
                     pass
-        # print("Sequence: ", self.sequence)
-        # print("Holecards: ", self.holecards)
 
     def parse_summary(self):
         """
@@ -326,14 +320,17 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
                 # return "\n*** {} *** [{}]".format(str_part, ' '.join(list_cards))
                 board_str += " [{}]".format(' '.join(list_cards))
             return board_str
-        except:
+        except IndexError:  # if the splitboard index does not exist
             return ""
 
     # def default_player():  # remove it, Hero not default
     #     return "Hero"
     # game_player = default_player()
 
-    def is_allin(stacks, sequence, position, bb):
+    def is_allin(stacks, sequence, position, bb):  # fixme dont seems to work
+        """
+        Returns bool from the postion name
+        """
         for pos in stacks:
             stacks[pos] = int(stacks[pos]*100)
         hand = Hand.Hand(1, stacks=stacks, bb=int(bb*100))
@@ -347,7 +344,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
 
     # why? sequence_parser wasnt good?
     def seq_to_actions(sequence):
-        return sequence.replace('c',' c').replace('f', ' f').replace('r', ' r').replace('/',' /').strip().split()
+        return sequence.replace('c', ' c').replace('f', ' f').replace('r', ' r').replace('/', ' /').strip().split()
 
     def pot(stacks, sequence, bb):
         for pos in stacks:
@@ -425,7 +422,8 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
             if action[1] == 'checks':
                 ret_str += "\n{}: checks".format(action[0])
             if action[1] == 'raises':
-                ret_str += "\n{}: raises {} to {}".format(action[0], action[2], action[3])
+                ret_str += "\n{}: raises {} to {}".format(action[0], action[2], action[3])  # check is allin
+                ret_str += " and is all-in" if is_allin(stacks, sequence, inv_dict_player[action[0]], bigblind) else ""
             if action[1] == 'bet':
                 ret_str += "\n{}: bet {} ".format(action[0], action[2])
             if action[1] == 'collected':
@@ -477,17 +475,17 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     #build player_stack_str
     for i, player in enumerate(order_players):
         # ret_string += "Seat "+i+" "+str(players[player_pos] if players[player_pos] is not None else "Player"+i)
-        play_stack_str += "\nSeat {} {} ({} in chips)".format(i, player, stacks[sublist_[i]])  # todo i+1?
+        play_stack_str += "\nSeat {} {} ({} in chips)".format(i+1, player, stacks[sublist_[i]])
         if player == players['BTN']:
             btn_num = i
 
     # TODO ants..
     # small/big lbind posts
     try:
-        blind_str = "\n{}: posts small bling {}".format(players['SB'], bigblind/2.0)
-    except:
-        blind_str = "\n{}: posts small bling {}".format(players['BTN'], bigblind/2.0)  # when 2 players, BTN is also SB
-    blind_str += "\n{}: posts small bling {}".format(players['BB'], bigblind)
+        blind_str = "\n{}: posts small blind {}".format(players['SB'], bigblind/2.0)
+    except KeyError:  # if sb doest not exist
+        blind_str = "\n{}: posts small blind {}".format(players['BTN'], bigblind/2.0)  # when 2 players, BTN is also SB
+    blind_str += "\n{}: posts small blind {}".format(players['BB'], bigblind)
 
     #####################
     # Holecard and part #
@@ -532,7 +530,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
 
     string_pos_dict = {'BTN': 'button', 'SB': 'small blind', 'BB': 'big blind'}
     for i, player in enumerate(order_players):
-        summary_str += "\nSeat {}: {} {} {}".format(i, player,  '('+string_pos_dict[sublist_[i]]+')'
+        summary_str += "\nSeat {}: {} {} {}".format(i+1, player,  '('+string_pos_dict[sublist_[i]]+')'
         if sublist_[i] in ['BTN', 'SB', 'BB'] else "", action_summary.get(player, ""))
         if player == winner:
             summary_str += " won"
@@ -551,7 +549,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
 
 
 if __name__ == '__main__':
-    hands = open('hands_example.txt').read().split('\n\n')  # not always
+    hands = open('hands_test.txt').read().split('\n\n')  # not always
 
     # help(firepoker)
 
@@ -569,12 +567,21 @@ if __name__ == '__main__':
         break
 
 # 1) At times you use try/except instead of if/else. This is a pretty bad approach cause errors could go through unobserved. Please make sure those parts are replaced with if/else
-# On certain times, i think this is simpler, e.g for non existing index entry, but i correct on the bad ones
+# I removed lot of them, for the other added the correct exeption to throw, then other errors wont be silent
 # 2) In def acpc2PS players can be None, but I'm pretty sure this would break the code. Change that to use position names in case players is not given
 # Its done, when None player Name = player position
 # 3) Holecards variable is now keyed with player names, but I'd rather have it key'ed by position just like stacks. Could you change that?
-# For what i see holecards is keyed with position name (?)
+# For what i see holecards is already keyed with position name (?)
 # 4) I've changed the blinds to just the big blind and the small blind will be half of that.
 # It is done
 # 5) Let's limit ourselves now to 3 player games. I've changed the hands_example accordingly
-# OK, but i still left the posibility for more than 3 players, it is working with that
+# OK, but i still left the possibility for more than 3 players, it is working with that
+
+##########
+# Issues #
+##########
+# is_allin return bad results
+# maybe because total pot is also wrong?
+# some hands seems to cause infinite loop to to firepoker or hand.py (e.g the second hand)
+# its seems the problems are when the game reaches flop, turn river.. when you instantiate, i havent seen holecards or
+# boardcards passed as arguments
