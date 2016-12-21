@@ -284,7 +284,8 @@ def PS2acpc(ps_text):
     return ante, bblind, stacks, sequence, holecards,  boardcards, winner, players
 
 
-_pos_name_lst = HandHistory.pos_name_lst
+_pos_name_lst = HandHistory.pos_name_lst  # global var for the position list (def in the class)
+
 
 def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante=10, bigblind=20, rake=0):
     """
@@ -301,7 +302,9 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
 
     n_players = len(stacks)  # gives the number of players
     sublist_ = _pos_name_lst[n_players-2]  # the list of position correspunding to the number of players (2play: index0)
-    order_players = map(lambda pos: players[pos], sublist_)  # list of players, ordered by their position
+    # list of players, ordered by their position. If players None, then players name = player position
+    players = dict(zip(sublist_, sublist_)) if players is None else players
+    order_players = map(lambda pos: players[pos], sublist_)
     inv_dict_player = dict(zip(players.values(), players.keys()))  # nice, i thinked the order was not guaranted ;)
 
     split_sequence = sequence.split("/")
@@ -564,3 +567,14 @@ if __name__ == '__main__':
         print(hand_conv)
 
         break
+
+# 1) At times you use try/except instead of if/else. This is a pretty bad approach cause errors could go through unobserved. Please make sure those parts are replaced with if/else
+# On certain times, i think this is simpler, e.g for non existing index entry, but i correct on the bad ones
+# 2) In def acpc2PS players can be None, but I'm pretty sure this would break the code. Change that to use position names in case players is not given
+# Its done, when None player Name = player position
+# 3) Holecards variable is now keyed with player names, but I'd rather have it key'ed by position just like stacks. Could you change that?
+# For what i see holecards is keyed with position name (?)
+# 4) I've changed the blinds to just the big blind and the small blind will be half of that.
+# It is done
+# 5) Let's limit ourselves now to 3 player games. I've changed the hands_example accordingly
+# OK, but i still left the posibility for more than 3 players, it is working with that
