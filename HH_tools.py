@@ -25,7 +25,7 @@ import firepoker.Hand as Hand
 # _pos_name_lst is declared after. Located inside the class
 
 
-class Hand_history:
+class HandHistory:
     """
     Class called for each hand
     """
@@ -40,6 +40,7 @@ class Hand_history:
             ["BTN", "SB", "BB", "UTG", "UTG+1", "MP1", "MP2", "MP3", "CO"],
             ["BTN", "SB", "BB", "UTG", "UTG+1", "UTG+2", "MP1", "MP2", "MP3", "CO"],
         ]
+
     def __init__(self, hand_file):
         # format attributes
         self.ante = 0
@@ -47,7 +48,7 @@ class Hand_history:
         self.stacks = {}  # key: position_name value: stack_of_player chips
         self.sequence = ""
         self.holecards = {}  # in the examples, hero is the player. Holecards are dealt just after "holecard"
-        self.boardcards = ""  #  board afer summary  2c2d2h/3h/4h always 3 max flop?
+        self.boardcards = ""  # board afer summary  2c2d2h/3h/4h always 3 max flop?
         self.winner = ""  # "and won summary", or show down?
         self.players = {}  # {'BB':'Jack', 'BTN':'John'}
 
@@ -271,7 +272,7 @@ class Hand_history:
         # print(self.player_inv_dict)
 
 def PS2acpc(ps_text):
-    instance = Hand_history(ps_text)
+    instance = HandHistory(ps_text)
     ante = instance.ante
     bblind = instance.bblind
     stacks = instance.stacks
@@ -283,7 +284,7 @@ def PS2acpc(ps_text):
     return ante, bblind, stacks, sequence, holecards,  boardcards, winner, players
 
 
-_pos_name_lst = Hand_history.pos_name_lst
+_pos_name_lst = HandHistory.pos_name_lst
 
 def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante=10, bigblind=20, rake=0):
     """
@@ -303,13 +304,13 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     order_players = map(lambda pos: players[pos], sublist_)  # list of players, ordered by their position
     inv_dict_player = dict(zip(players.values(), players.keys()))  # nice, i thinked the order was not guaranted ;)
 
-
-
     split_sequence = sequence.split("/")
+
     def sequence_parser(splt_seq):
         return re.findall("([a-z][0-9-.]*)", splt_seq, re.DOTALL)
 
     split_bordcard = boardcards.split("/")
+
     def write_board(splitboard, str_part, j):
         """
         Craft the different section names with correspondant boardcards
@@ -325,9 +326,9 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
         except:
             return ""
 
-    def default_player():  # todo remove it, Hero not default
-        return "Hero"
-    game_player = default_player()
+    # def default_player():  # remove it, Hero not default
+    #     return "Hero"
+    # game_player = default_player()
 
     def is_allin(stacks, sequence, position, bb):
         for pos in stacks:
@@ -357,24 +358,56 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
             hand.doAction(action)
         return hand.get_pot()
 
-
-    def player_actions(ord_play, seq_part, holecards, boardcard, player):
+    def get_player_actions(stacks, sequence, bb):
         """
         With the given informations, maybe more, returns a nested list, for each parts (preflop, flop..)
         [[["player_name","raises", int_from, int_to],["player_name","bet",int_bet]..],
         [..]]
-        :param ord_play: 
-        :param seq_part: 
+        :param stacks:
+        :param sequence:
+        :param bb:
         :return: 
         """
-        # example for the third hand, on holecards
-        players_actions = [[["mazi61", "folds"],
-                            ["Hero", "raises", 0.2, 0.3],
-                            ["..."]],
-                           ["..."]]
+        stacks_tmp = {}
+        for pos in stacks:
+            stacks_tmp[pos] = int(stacks[pos]*100)
+        hand = Hand.Hand(1, stacks=stacks_tmp, bb=int(bb*100))
+
+        players_actions = [[], [], [], []]
+        last_round_bet = hand.get_investment('max') / 100.0
+        for action in seq_to_actions(sequence.replace('/','')):
+            acting_pos = hand.get_acting_player()
+            acting_player = players.get(acting_pos, acting_pos)
+
+            print hand.get_state_str(), acting_pos
+            if action == 'f':
+                player_action = [acting_player, 'folds']
+            elif action == 'c' and hand.get_investment(acting_pos) < hand.get_investment('max'):
+                amount_to_call = ( hand.get_investment('max') - hand.get_investment(acting_pos) ) / 100.0
+                player_action = [acting_player, 'calls', amount_to_call]
+            elif action == 'c':
+                player_action = [acting_player, 'checks']
+            elif action[0] == 'r' and hand.get_round() == 0:
+                max_previous_bet = hand.get_investment('max') / 100.0
+                size = float(action[1:])
+                player_action = [acting_player, 'raises', size-max_previous_bet, size]
+            elif action[0] == 'r' and hand.get_num_raises() == 0 :
+                size = float(action[1:]) - max_previous_bet
+                player_action = [acting_player, 'bets', size]
+            elif action[0] == 'r':
+                size = float(action[1:]) - max_previous_bet
+            else:
+                print '[{}]'.format(action)
+                raise NotImplementedError
+
+            players_actions[hand.get_round()].append(player_action)
+            if 'r' in action:
+                action = 'r{}'.format(int(float(action[1:])*100))
+            hand.doAction(action)
+
         return players_actions
 
-
+    player_actions = get_player_actions(stacks, sequence, bigblind)
 
     def write_actions(actions):
         """
@@ -394,7 +427,8 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
                 ret_str += "\n{}: bet {} ".format(action[0], action[2])
             if action[1] == 'collected':
                 ret_str += "\n{}: collected {} from pot ".format(action[0], action[2])
-                
+        return ret_str
+
     def write_action_summary(action_list):
         """
         Take the output of player_actions(), and make a summary of theyre actions, in a dict with play_name as key
@@ -408,7 +442,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
                 summary_dict[action[0]] = " collected ({}) ".format(action[2])
 
         #flop
-        for action in action_list[0]:
+        for action in action_list[1]:
             if action[1] == 'folds':
                 summary_dict[action[0]] = "folded on Flop"
             if action[1] == 'collected':
@@ -421,6 +455,8 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
                 summary_dict[action[0]] = "folded on the Turn"
             if action[1] == 'collected':
                 summary_dict[action[0]] = " collected ({}) ".format(action[2])
+        # todo river?
+        return summary_dict
 
     ###################
     # "Writting" part #
@@ -430,7 +466,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     play_stack_str = ""
     btn_num = 0
 
-
+    # build header
     header = "PokerStars Hand #XXX: Tournament #XXX, $2.00+$2.00+$0.40 USD Hold'em No" \
              "Limit - Level XVIII ({}/{})  - 2016/07/29 23:25:05 MSK [2016/07/29 16:25:05 ET]\n" \
              "Table '1618015625 40' 9-max Seat #{} is the button".format(bigblind/2.0, bigblind, btn_num)  # 0:.2f for floats?
@@ -450,6 +486,9 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
         blind_str = "\n{}: posts small bling {}".format(players['BTN'], bigblind/2.0)  # when 2 players, BTN is also SB
     blind_str += "\n{}: posts small bling {}".format(players['BB'], bigblind)
 
+    #####################
+    # Holecard and part #
+    #####################
     # holecards str
     holecards_str = "\n*** HOLE CARDS ***"
 
@@ -457,19 +496,20 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     # the "dealt" part
     if 'Hero' in players.values():
         # holecards_str += "\nDealt to {} [{}]".format(game_player, holecards[inv_dict_player[game_player]])
-        holecards_str += "\nDealt to Hero [{}]".format(holecards[inv_dict_player('Hero')])
+        holecards_str += "\nDealt to Hero [{}]".format(holecards[inv_dict_player['Hero']])
 
+    # actions for holecards [0]
+    holecards_str += write_actions(player_actions[0])
 
+    # write the pending boardcards, and player actions in between
+    flop_str = write_board(split_bordcard, "FLOP", 0) if split_bordcard[0] != "" else ""
+    holecards_str += write_actions(player_actions[1])
 
-    # actions for holecards [0], True because preflop
-    # holecards_str += player_actions(order_players, sequence_parser(split_sequence[0]))
-
-    # write the pending boardcards
-    flop_str = write_board(split_bordcard, "FLOP", 0)
-    # todo actions for flop
     turn_str = write_board(split_bordcard, "TURN", 1)
+    holecards_str += write_actions(player_actions[2])
+
     river_str = write_board(split_bordcard, "RIVER", 2)
-    
+    holecards_str += write_actions(player_actions[3])
     #############
     # Show down #
     #############
@@ -478,18 +518,19 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     # SUMMARY #
     ###########
 
-    summary_str = "\n*** SUMMARY ***\n" \
-                  "Total pot {} | Rake {}\n".format(pot(stacks, sequence, bigblind), rake)
+    summary_str = "\n*** SUMMARY ***" \
+                  "\nTotal pot {} | Rake {}".format(pot(stacks, sequence, bigblind), rake)
 
-    # make the boardcard summary todo
+    # make the boardcard summary, if not empty
+    action_summary = write_action_summary(player_actions)  # type: dict ,to write "folded before flop" etc..
     final_board = boardcards.replace("/", "")
     list_board = [final_board[i:i + 2] for i in range(0, len(final_board), 2)]
-    summary_str += "Board [{}]".format(' '.join(list_board))
+    summary_str += "\nBoard [{}]".format(' '.join(list_board)) if len(list_board) > 0 else ""
 
     string_pos_dict = {'BTN': 'button', 'SB': 'small blind', 'BB': 'big blind'}
     for i, player in enumerate(order_players):
-        summary_str += "\nSeat {}: {} {}".format(i, player,  '('+string_pos_dict[sublist_[i]]+')'
-        if sublist_[i] in ['BTN', 'SB', 'BB'] else "")
+        summary_str += "\nSeat {}: {} {} {}".format(i, player,  '('+string_pos_dict[sublist_[i]]+')'
+        if sublist_[i] in ['BTN', 'SB', 'BB'] else "", action_summary.get(player, ""))
         if player == winner:
             summary_str += " won"
 
@@ -522,4 +563,4 @@ if __name__ == '__main__':
         hand_conv = acpc2PS(stacks, sequence, holecards,  boardcards, winner, players, ante, blind)
         print(hand_conv)
 
-        # break
+        break
