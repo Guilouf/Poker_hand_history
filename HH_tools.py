@@ -331,16 +331,17 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
         """
         Returns bool from the postion name
         """
+        stacks_computation = {}
         for pos in stacks:
-            stacks[pos] = int(stacks[pos]*100)
-        hand = Hand.Hand(1, stacks=stacks, bb=int(bb*100))
+            stacks_computation[pos] = int(stacks[pos]*100)
+        hand = Hand.Hand(1, stacks=stacks_computation, bb=int(bb*100))
         for action in seq_to_actions(sequence):
             if '/' == action:
                 continue
             if 'r' in action:
                 action = 'r{}'.format(int(float(action[1:])*100))
             hand.doAction(action)
-        return stacks[position] == hand.get_investment(position)
+        return stacks_computation[position] == hand.get_investment(position)
 
     # why? sequence_parser wasnt good?
     def seq_to_actions(sequence):
@@ -356,7 +357,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
             if 'r' in action:
                 action = 'r{}'.format(int(float(action[1:])*100))
             hand.doAction(action)
-        return hand.get_pot()
+        return hand.get_pot() / 100.0
 
     def get_player_actions(stacks, sequence, bb):
         """
@@ -468,14 +469,14 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     btn_num = 0
 
     # build header
-    header = "PokerStars Hand #XXX: Tournament #XXX, $2.00+$2.00+$0.40 USD Hold'em No" \
-             "Limit - Level XVIII ({}/{})  - 2016/07/29 23:25:05 MSK [2016/07/29 16:25:05 ET]\n" \
-             "Table '1618015625 40' 9-max Seat #{} is the button".format(bigblind/2.0, bigblind, btn_num)  # 0:.2f for floats?
+    header = "PokerStars Hand #999: Tournament #999, $2.00+$2.00+$0.40 USD Hold'em No " \
+             "Limit - Level XVIII ({}/{}) - 2016/07/29 23:25:05 MSK [2016/07/29 16:25:05 ET]\n" \
+             "Table '1618015625 40' 3-max Seat #{} is the button".format(bigblind/2.0, bigblind, btn_num+1)  # 0:.2f for floats?
 
     #build player_stack_str
     for i, player in enumerate(order_players):
         # ret_string += "Seat "+i+" "+str(players[player_pos] if players[player_pos] is not None else "Player"+i)
-        play_stack_str += "\nSeat {} {} ({} in chips)".format(i+1, player, stacks[sublist_[i]])
+        play_stack_str += "\nSeat {}: {} ({} in chips)".format(i+1, player, stacks[sublist_[i]])
         if player == players['BTN']:
             btn_num = i
 
@@ -554,7 +555,10 @@ if __name__ == '__main__':
     # help(firepoker)
 
     for hand in hands:
+        # print '\n###############################################################################'
+        # print '\n###PS hand###\n'
         # print hand
+
         ante, blind, stacks, sequence, holecards, boardcards, winner, players = PS2acpc(hand)
         print("\n\n\nHand results:")
         print("Ante: ", ante, "Stacks: ", stacks, "Sequence: ", sequence)
@@ -564,24 +568,14 @@ if __name__ == '__main__':
         hand_conv = acpc2PS(stacks, sequence, holecards,  boardcards, winner, players, ante, blind)
         print(hand_conv)
 
-        break
+        # break
 
-# 1) At times you use try/except instead of if/else. This is a pretty bad approach cause errors could go through unobserved. Please make sure those parts are replaced with if/else
-# I removed lot of them, for the other added the correct exeption to throw, then other errors wont be silent
-# 2) In def acpc2PS players can be None, but I'm pretty sure this would break the code. Change that to use position names in case players is not given
-# Its done, when None player Name = player position
 # 3) Holecards variable is now keyed with player names, but I'd rather have it key'ed by position just like stacks. Could you change that?
 # For what i see holecards is already keyed with position name (?)
-# 4) I've changed the blinds to just the big blind and the small blind will be half of that.
-# It is done
-# 5) Let's limit ourselves now to 3 player games. I've changed the hands_example accordingly
-# OK, but i still left the possibility for more than 3 players, it is working with that
 
 ##########
 # Issues #
 ##########
-# is_allin return bad results
-# maybe because total pot is also wrong?
 # some hands seems to cause infinite loop to to firepoker or hand.py (e.g the second hand)
 # its seems the problems are when the game reaches flop, turn river.. when you instantiate, i havent seen holecards or
 # boardcards passed as arguments
