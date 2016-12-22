@@ -51,6 +51,7 @@ class HandHistory:
         self.boardcards = ""  # board afer summary  2c2d2h/3h/4h always 3 max flop?
         self.winner = ""  # "and won summary", or show down?
         self.players = {}  # {'BB':'Jack', 'BTN':'John'}
+        self.uncalledbet = 0  # its normally assigned to a player, for now its just a float
 
         # utility attributes
         self.hand_file = hand_file
@@ -129,13 +130,17 @@ class HandHistory:
         for tuple_dict in stacks_temp.items():  # fixme python 2.7?
             self.stacks[self.player_inv_dict[tuple_dict[0]]] = tuple_dict[1]
 
-        ##################
-        # Check for ante #
-        ##################
+        ##################################
+        # Check for ante and uncalled bet#
+        ##################################
 
         for line in gen_line:
             try:
                 self.ante = re.search('the ante ([0-9]+)', line).group(1)
+            except AttributeError:  # if the line does not exist
+                pass
+            try:  # quick, ugly fix for uncalled bet
+                self.uncalledbet = float(re.search('Uncalled bet \(([0-9-.]+)\)', line).group(1))
             except AttributeError:  # if the line does not exist
                 pass
 
@@ -275,13 +280,14 @@ def PS2acpc(ps_text):
     boardcards = instance.boardcards
     winner = instance.winner
     players = instance.players
-    return ante, bblind, stacks, sequence, holecards,  boardcards, winner, players
+    uncalled = instance.uncalledbet
+    return ante, bblind, stacks, sequence, holecards,  boardcards, winner, players, uncalled
 
 
 _pos_name_lst = HandHistory.pos_name_lst  # global var for the position list (def in the class)
 
 
-def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante=10, bigblind=20, rake=0):
+def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante=10, bigblind=20, rake=0, uncalled=0):
     """
     Write default args, payers=None
 
@@ -357,7 +363,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
             if 'r' in action:
                 action = 'r{}'.format(int(float(action[1:])*100))
             hand.doAction(action)
-        return hand.get_pot() / 100.0
+        return (hand.get_pot() / 100.0) -uncalled  # todo pot minus uncalled bet
 
     def get_player_actions(stacks, sequence, bb):
         """
@@ -559,13 +565,13 @@ if __name__ == '__main__':
         # print '\n###PS hand###\n'
         # print hand
 
-        ante, blind, stacks, sequence, holecards, boardcards, winner, players = PS2acpc(hand)
+        ante, blind, stacks, sequence, holecards, boardcards, winner, players, uncall = PS2acpc(hand)
         print("\n\n\nHand results:")
         print("Ante: ", ante, "Stacks: ", stacks, "Sequence: ", sequence)
         print("Holecards: ", holecards, "Boardcards: ", boardcards)
         print("Winner: ", winner, "Players: ", players)
 
-        hand_conv = acpc2PS(stacks, sequence, holecards,  boardcards, winner, players, ante, blind)
+        hand_conv = acpc2PS(stacks, sequence, holecards,  boardcards, winner, players, ante, blind, uncalled=uncall)
         print(hand_conv)
 
         # break
