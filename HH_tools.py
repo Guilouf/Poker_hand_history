@@ -22,6 +22,7 @@ UTG - under the gun
 
 import re
 import firepoker.Hand as Hand
+from collections import deque  # for list rotation
 # _pos_name_lst is declared after. Located inside the class
 
 
@@ -249,13 +250,13 @@ class HandHistory:
             :param btn_player:
             :return:
             """
-            flag = True
-            x = 0
-            while flag:
-                if list_p[0] == btn_player:
-                    return list_p
-                x += 1
-                list_p = list_p[-x:] + list_p[:-x]
+
+            rota = deque(list_p)
+
+            for i in range(0,len(list_p)):
+                if rota[0] == btn_player:
+                    return list(rota)
+                rota.rotate(1)
 
         for sublist in self.pos_name_lst:
             if len(sublist) == len(self.player_list):
@@ -556,7 +557,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
 
 
 if __name__ == '__main__':
-    hands = open('hands_test.txt').read().split('\n\n')  # not always
+    hands = open('hands_example.txt').read().split('\n\n')  # not always
 
     # help(firepoker)
 
