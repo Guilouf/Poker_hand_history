@@ -17,6 +17,10 @@ CO – cut-off (the seat to the right of the button)
 MP – “middle position”: the three seats to the right of the cut-off.
 UTG - under the gun
 
+
+http://www.handconverter.com/
+
+
 """
 
 
@@ -128,7 +132,7 @@ class HandHistory:
         self.position()  # call position method to order the player with their positions
 
         # add value of stacks by position in self.stacks
-        for tuple_dict in stacks_temp.items():  # fixme python 2.7?
+        for tuple_dict in stacks_temp.items():
             self.stacks[self.player_inv_dict[tuple_dict[0]]] = tuple_dict[1]
 
         ##################################
@@ -164,7 +168,7 @@ class HandHistory:
             else:
                 return "", 0
 
-        # add player hole cards todo change try/except to ifs
+        # add player hole cards
         try:
             reg_holecard = re.search("Dealt to (.+) \[(.+)\]", self.part_dict["HOLE CARDS"][1])  # group1 name, 2 card value
             self.holecards[self.player_inv_dict[reg_holecard.group(1)]] = reg_holecard.group(2).replace(' ', '')
@@ -266,7 +270,7 @@ class HandHistory:
                     self.players[pos] = player
 
         # Build a reverse dict
-        for tuple_dict in self.players.items():  # fixme python 2.7?
+        for tuple_dict in self.players.items():
             self.player_inv_dict[tuple_dict[1]] = tuple_dict[0]
         # print(self.players)
         # print(self.player_inv_dict)
@@ -334,7 +338,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
     #     return "Hero"
     # game_player = default_player()
 
-    def is_allin(stacks, sequence, position, bb):  # fixme dont seems to work
+    def is_allin(stacks, sequence, position, bb):
         """
         Returns bool from the postion name
         """
@@ -364,7 +368,7 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
             if 'r' in action:
                 action = 'r{}'.format(int(float(action[1:])*100))
             hand.doAction(action)
-        return (hand.get_pot() / 100.0) -uncalled  # todo pot minus uncalled bet
+        return (hand.get_pot() / 100.0) -uncalled
 
     def get_player_actions(stacks, sequence, bb):
         """
@@ -391,15 +395,15 @@ def acpc2PS(stacks, sequence, holecards,  boardcards, winner, players=None, ante
             if action == 'f':
                 player_action = [acting_player, 'folds']
             elif action == 'c' and hand.get_investment(acting_pos) < hand.get_investment('max'):
-                amount_to_call = ( hand.get_investment('max') - hand.get_investment(acting_pos) ) / 100.0
+                amount_to_call = ( hand.get_investment('max') - hand.get_investment(acting_pos)) / 100.0
                 player_action = [acting_player, 'calls', amount_to_call]
             elif action == 'c':
                 player_action = [acting_player, 'checks']
-            elif action[0] == 'r' and hand.get_round() == 0:
+            elif action[0] == 'r' and hand.get_round() == 0:  #fixme max_previous defined here, but not always called
                 max_previous_bet = hand.get_investment('max') / 100.0
                 size = float(action[1:])
                 player_action = [acting_player, 'raises', size-max_previous_bet, size]
-            elif action[0] == 'r' and hand.get_num_raises() == 0 :
+            elif action[0] == 'r' and hand.get_num_raises() == 0:
                 size = float(action[1:]) - max_previous_bet
                 player_action = [acting_player, 'bets', size]
             elif action[0] == 'r':
